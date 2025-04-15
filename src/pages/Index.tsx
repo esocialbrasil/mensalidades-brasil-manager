@@ -450,10 +450,10 @@ const Index = () => {
                     </div>}
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => setShowConfigModal(false)}>
+                  <button type="button" onClick={() => setShowConfigModal(false)} className="btn btn-secondary text-zinc-900">
                     Cancelar
                   </button>
-                  <button type="button" onClick={saveCompanyConfig} className="btn btn-primary ">
+                  <button type="button" onClick={saveCompanyConfig} className="btn btn-primary bg-blue-600 hover:bg-blue-500 text-blue-600">
                     Salvar
                   </button>
                 </div>
