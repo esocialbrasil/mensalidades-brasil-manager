@@ -1,3 +1,4 @@
+
 /* Mensalidades CSS */
 
 /* Bootstrap 4-like styles */
@@ -202,7 +203,7 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   outline: 0;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 .modal-header {
@@ -515,10 +516,12 @@ label {
   opacity: 1 !important;
 }
 
+/* Explicitly ensure inputs and selects in modal are opaque */
 .modal-content select,
 .modal-content input {
   background-color: #ffffff !important;
   border: 1px solid #ced4da !important;
+  opacity: 1 !important;
 }
 
 /* Fix modal z-index to ensure it appears above everything else */
@@ -529,4 +532,17 @@ label {
 /* Additional padding for the modal footer */
 .modal-footer {
   padding: 1rem;
+}
+
+/* Force modal to be opaque */
+.modal-dialog {
+  opacity: 1 !important;
+}
+
+/* Enforce solid white background for all modal elements */
+.modal-content,
+.modal-content > *,
+.modal-content > * > * {
+  background-color: #ffffff !important;
+  color: #000000;
 }
