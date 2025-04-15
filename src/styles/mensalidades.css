@@ -152,14 +152,24 @@
 }
 
 /* Modal Styles - Fixed for proper layering and opacity */
-.modal-backdrop {
+.modal-backdrop::before {
+  content: '';
+  width: 100%;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1040;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
+}
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal {
@@ -172,12 +182,17 @@
   overflow-x: hidden;
   overflow-y: auto;
   outline: 0;
+  opacity: 1;
+  background-color: #fff;
 }
 
-.modal.show {
+ .modal.show {
   display: block;
   padding-right: 15px;
-}
+  opacity: 1;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+} 
 
 .modal-dialog {
   position: relative;
@@ -246,8 +261,8 @@
 
 /* Fixed backdrop opacity - semi-transparent to see behind but dark enough for contrast */
 .modal-backdrop.show {
-  opacity: 0.5 !important;
-}
+  opacity: 0.8;
+} 
 
 .close {
   float: right;
@@ -386,7 +401,7 @@ label {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.btn-primary {
+/* .btn-primary {
   color: #fff;
   background-color: var(--blue);
   border-color: var(--blue);
@@ -408,9 +423,9 @@ label {
   color: #fff;
   background-color: #5a6268;
   border-color: #545b62;
-}
+} */
 
-.btn-outline-primary {
+/* .btn-outline-primary {
   color: var(--blue);
   border-color: var(--blue);
   background-color: transparent;
@@ -463,7 +478,7 @@ label {
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
-}
+} */
 
 /* Alert styles */
 .alert {
