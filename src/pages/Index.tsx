@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Search, Check, X, Edit, ChevronLeft, ChevronRight } from "lucide-react";
 import "@/styles/mensalidades.css";
@@ -395,7 +396,16 @@ const Index = () => {
                   <td>{company.chargeType === "lives" ? "Por vidas" : "Valor fixo"}</td>
                   <td>{getAdjustmentDescription(company)}</td>
                   <td>
-                    <span>{formatCurrency(getCurrentValue(company))}</span>
+                    {company.chargeType === "fixed" && company.status === "liberado" ? (
+                      <input 
+                        type="text" 
+                        className="form-control currency-input"
+                        value={formatCurrency(company.fixedValue || 0)}
+                        onChange={(e) => updateFixedValue(company.id, e.target.value)}
+                      />
+                    ) : (
+                      <span>{formatCurrency(getCurrentValue(company))}</span>
+                    )}
                   </td>
                   <td>
                     <button 
