@@ -1,3 +1,4 @@
+
 /* Mensalidades CSS */
 
 /* Bootstrap 4-like styles */
@@ -201,6 +202,7 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .modal-header {
@@ -211,6 +213,7 @@
   border-bottom: 1px solid #dee2e6;
   border-top-left-radius: 0.3rem;
   border-top-right-radius: 0.3rem;
+  background-color: #fff;
 }
 
 .modal-title {
@@ -223,6 +226,7 @@
   position: relative;
   flex: 1 1 auto;
   padding: 1rem;
+  background-color: #fff;
 }
 
 .modal-footer {
@@ -233,6 +237,7 @@
   border-top: 1px solid #dee2e6;
   border-bottom-right-radius: 0.3rem;
   border-bottom-left-radius: 0.3rem;
+  background-color: #fff;
 }
 
 .close {
@@ -483,3 +488,20 @@ label {
     margin: 0.5rem;
   }
 }
+
+/* Improve modal visibility */
+.modal-backdrop.show {
+  opacity: 0.8; /* Darker background for better contrast */
+  z-index: 1040;
+}
+
+.modal-dialog {
+  z-index: 1050; /* Ensure the dialog is above the backdrop */
+}
+
+/* Fix for the modal content to ensure it's fully opaque */
+.modal-content {
+  background-color: #fff;
+  opacity: 1; /* Ensure full opacity */
+}
+
