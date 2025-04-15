@@ -1,4 +1,3 @@
-
 /* Mensalidades CSS */
 
 /* Bootstrap 4-like styles */
@@ -491,8 +490,9 @@ label {
 
 /* Improve modal visibility */
 .modal-backdrop.show {
-  opacity: 0.8; /* Darker background for better contrast */
+  opacity: 1; /* Full opacity for the backdrop */
   z-index: 1040;
+  background-color: rgba(0, 0, 0, 1); /* Solid black backdrop */
 }
 
 .modal-dialog {
@@ -504,4 +504,3 @@ label {
   background-color: #fff;
   opacity: 1; /* Ensure full opacity */
 }
-
