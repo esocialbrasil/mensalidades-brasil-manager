@@ -1,9 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { Search, Check, X, Edit, ChevronLeft, ChevronRight } from "lucide-react";
 import "@/styles/mensalidades.css";
 
-// Company data structure
 interface Company {
   id: string;
   name: string;
@@ -20,7 +18,6 @@ interface Company {
 }
 
 const Index = () => {
-  // State management
   const [companies, setCompanies] = useState<Company[]>([]);
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,7 +28,6 @@ const Index = () => {
   const [currentCompany, setCurrentCompany] = useState<Company | null>(null);
   const [selectAll, setSelectAll] = useState(false);
   
-  // Mass adjustment state
   const [massAdjustment, setMassAdjustment] = useState({
     adjustmentType: "none" as "none" | "annual" | "periodic",
     adjustmentPercentage: 0,
@@ -39,10 +35,8 @@ const Index = () => {
     adjustmentPeriod: 12
   });
 
-  // Pagination settings
   const itemsPerPage = 10;
   
-  // Initialize with dummy data
   useEffect(() => {
     const dummyData: Company[] = [
       {
@@ -125,7 +119,6 @@ const Index = () => {
     setFilteredCompanies(dummyData);
   }, []);
 
-  // Format currency values
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('pt-BR', { 
       style: 'currency', 
@@ -133,7 +126,6 @@ const Index = () => {
     }).format(value);
   };
 
-  // Get current company value
   const getCurrentValue = (company: Company): number => {
     if (company.chargeType === "fixed") {
       return company.fixedValue || 0;
@@ -142,7 +134,6 @@ const Index = () => {
     }
   };
 
-  // Get adjustment description
   const getAdjustmentDescription = (company: Company): string => {
     if (company.adjustmentType === "none") return "Sem reajuste";
     if (company.adjustmentType === "annual") {
@@ -153,7 +144,6 @@ const Index = () => {
     return `${company.adjustmentPercentage}% a cada ${company.adjustmentPeriod} meses`;
   };
 
-  // Handle search
   const handleSearch = () => {
     if (!searchTerm.trim()) {
       setFilteredCompanies(companies);
@@ -172,7 +162,6 @@ const Index = () => {
     setCurrentPage(1);
   };
 
-  // Handle select all
   const handleSelectAll = () => {
     const newSelectAll = !selectAll;
     setSelectAll(newSelectAll);
@@ -185,7 +174,6 @@ const Index = () => {
     }
   };
 
-  // Handle company selection
   const handleSelectCompany = (id: string) => {
     if (selectedCompanies.includes(id)) {
       setSelectedCompanies(selectedCompanies.filter(companyId => companyId !== id));
@@ -193,25 +181,21 @@ const Index = () => {
     } else {
       setSelectedCompanies([...selectedCompanies, id]);
       
-      // Check if all are now selected
       if (selectedCompanies.length + 1 === filteredCompanies.length) {
         setSelectAll(true);
       }
     }
   };
 
-  // Open company config modal
   const openConfigModal = (company: Company) => {
     setCurrentCompany({...company});
     setShowConfigModal(true);
   };
 
-  // Open mass adjustment modal
   const openMassAdjustmentModal = () => {
     setShowMassAdjustmentModal(true);
   };
 
-  // Save company config
   const saveCompanyConfig = () => {
     if (!currentCompany) return;
     
@@ -226,7 +210,6 @@ const Index = () => {
     setShowConfigModal(false);
   };
 
-  // Apply mass adjustment
   const applyMassAdjustment = () => {
     const updatedCompanies = companies.map(company => {
       if (selectedCompanies.includes(company.id)) {
@@ -251,7 +234,6 @@ const Index = () => {
     setSelectAll(false);
   };
 
-  // Update fixed value
   const updateFixedValue = (companyId: string, value: string) => {
     const numericValue = parseFloat(value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
     
@@ -264,20 +246,17 @@ const Index = () => {
     ));
   };
 
-  // Pagination calculation
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredCompanies.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
 
-  // Pagination navigation
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const nextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
 
   return (
     <div className="mensalidades-container">
-      {/* Navigation Tabs */}
       <div className="nav-tabs-container">
         <ul className="nav nav-tabs">
           <li className="nav-item">
@@ -301,9 +280,7 @@ const Index = () => {
         </ul>
       </div>
       
-      {/* Main Content */}
       <div className="content-container">
-        {/* Search Bar */}
         <div className="search-container mb-4">
           <div className="input-group">
             <input 
@@ -326,7 +303,6 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Mass Adjustment Button */}
         {selectedCompanies.length > 0 && (
           <div className="mb-3">
             <button 
@@ -338,7 +314,6 @@ const Index = () => {
           </div>
         )}
         
-        {/* Table */}
         <div className="table-responsive">
           <table className="table table-hover">
             <thead>
@@ -396,16 +371,7 @@ const Index = () => {
                   <td>{company.chargeType === "lives" ? "Por vidas" : "Valor fixo"}</td>
                   <td>{getAdjustmentDescription(company)}</td>
                   <td>
-                    {company.chargeType === "fixed" && company.status === "liberado" ? (
-                      <input 
-                        type="text" 
-                        className="form-control currency-input"
-                        value={formatCurrency(company.fixedValue || 0)}
-                        onChange={(e) => updateFixedValue(company.id, e.target.value)}
-                      />
-                    ) : (
-                      <span>{formatCurrency(getCurrentValue(company))}</span>
-                    )}
+                    <span>{formatCurrency(getCurrentValue(company))}</span>
                   </td>
                   <td>
                     <button 
@@ -421,7 +387,6 @@ const Index = () => {
           </table>
         </div>
         
-        {/* Pagination */}
         {totalPages > 1 && (
           <nav aria-label="Paginação">
             <ul className="pagination justify-content-center">
@@ -455,7 +420,6 @@ const Index = () => {
         )}
       </div>
       
-      {/* Company Configuration Modal */}
       {showConfigModal && currentCompany && (
         <div className="modal-backdrop show">
           <div className="modal show d-block" tabIndex={-1} role="dialog">
@@ -653,7 +617,6 @@ const Index = () => {
         </div>
       )}
       
-      {/* Mass Adjustment Modal */}
       {showMassAdjustmentModal && (
         <div className="modal-backdrop show">
           <div className="modal show d-block" tabIndex={-1} role="dialog">
