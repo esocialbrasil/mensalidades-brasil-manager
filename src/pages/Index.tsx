@@ -464,12 +464,11 @@ const Index = () => {
                     <div className="row mb-3">
                       <div className="col-md-6">
                         <label>Número de vidas</label>
-                        <input 
-                          type="text" 
+                        <span 
                           className="form-control-plaintext"
-                          readOnly
-                          value={currentCompany.lives || 0}
-                        />
+                        >
+                          {currentCompany.lives || 0}
+                        </span>
                       </div>
                       <div className="col-md-6">
                         <label>Valor por vida (R$)</label>
