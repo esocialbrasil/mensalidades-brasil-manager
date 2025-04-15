@@ -1,3 +1,4 @@
+
 /* Mensalidades CSS */
 
 /* Bootstrap 4-like styles */
@@ -150,7 +151,7 @@
   max-width: 150px;
 }
 
-/* Modal Styles - Updated for better visibility */
+/* Modal Styles - Fixed for proper layering and opacity */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -243,6 +244,7 @@
   background-color: #ffffff;
 }
 
+/* Fixed backdrop opacity - semi-transparent to see behind but dark enough for contrast */
 .modal-backdrop.show {
   opacity: 0.5 !important;
 }
