@@ -388,9 +388,9 @@ const Index = () => {
       </div>
       
       {/* Config Modal */}
-      {showConfigModal && currentCompany && <div className="modal-backdrop show">
-          <div className="modal show d-block bg-white shadow rounded opacity-100" tabIndex={-1} role="dialog">
-            <div className="modal-dialog modal-lg" role="document">
+      {showConfigModal && currentCompany && <div className="">
+          <div className="modal show " tabIndex={-1} role="dialog">
+            <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Configuração de Mensalidade</h5>
@@ -466,7 +466,7 @@ const Index = () => {
                     
                     {currentCompany.adjustmentType !== "none" && <div className="col-md-6">
                         <label>Percentual de Reajuste (%)</label>
-                        <input type="number" className="form-control" min="0" step="0.1" value={currentCompany.adjustmentPercentage || 0} onChange={e => setCurrentCompany({
+                        <input type="number" className="form-control" min="0" step="1" value={currentCompany.adjustmentPercentage || 0} onChange={e => setCurrentCompany({
                     ...currentCompany,
                     adjustmentPercentage: parseFloat(e.target.value) || 0
                   })} />
@@ -520,9 +520,9 @@ const Index = () => {
         </div>}
       
       {/* Mass Adjustment Modal - Updated with improved company selection */}
-      {showMassAdjustmentModal && <div className="modal-backdrop show">
-          <div className="modal show d-block bg-white shadow rounded opacity-100" tabIndex={-1} role="dialog">
-            <div className="modal-dialog" role="document">
+      {showMassAdjustmentModal && <div>
+          <div className="modal show " tabIndex={-1} role="dialog">
+            <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Reajuste em Massa</h5>
