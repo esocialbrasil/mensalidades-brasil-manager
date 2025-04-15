@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Search, Check, X, Edit, ChevronLeft, ChevronRight } from "lucide-react";
 import "@/styles/mensalidades.css";
-
 interface Company {
   id: string;
   name: string;
@@ -16,7 +15,6 @@ interface Company {
   adjustmentMonth?: number;
   adjustmentPeriod?: number;
 }
-
 const Index = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
@@ -27,105 +25,91 @@ const Index = () => {
   const [showMassAdjustmentModal, setShowMassAdjustmentModal] = useState(false);
   const [currentCompany, setCurrentCompany] = useState<Company | null>(null);
   const [selectAll, setSelectAll] = useState(false);
-  
   const [massAdjustment, setMassAdjustment] = useState({
     adjustmentType: "none" as "none" | "annual" | "periodic",
     adjustmentPercentage: 0,
     adjustmentMonth: 1,
     adjustmentPeriod: 12
   });
-
   const itemsPerPage = 10;
-  
   useEffect(() => {
-    const dummyData: Company[] = [
-      {
-        id: "1",
-        name: "Nome da empresa fictícia",
-        document: "00.000.000/0000-00",
-        status: "liberado",
-        chargeType: "lives",
-        lives: 50,
-        valuePerLife: 66,
-        adjustmentType: "annual",
-        adjustmentPercentage: 10,
-        adjustmentMonth: 3
-      },
-      {
-        id: "2",
-        name: "Nome da empresa fictícia",
-        document: "00.000.000/0000-00",
-        status: "bloqueado",
-        chargeType: "fixed",
-        fixedValue: 840,
-        adjustmentType: "none"
-      },
-      {
-        id: "3",
-        name: "Nome da empresa fictícia",
-        document: "00.000.000/0000-00",
-        status: "liberado",
-        chargeType: "lives",
-        lives: 75,
-        valuePerLife: 44,
-        adjustmentType: "periodic",
-        adjustmentPercentage: 5,
-        adjustmentPeriod: 12
-      },
-      {
-        id: "4",
-        name: "Nome da empresa fictícia",
-        document: "00.000.000/0000-00",
-        status: "liberado",
-        chargeType: "fixed",
-        fixedValue: 3300,
-        adjustmentType: "annual",
-        adjustmentPercentage: 8,
-        adjustmentMonth: 7
-      },
-      {
-        id: "5",
-        name: "Nome da empresa fictícia",
-        document: "00.000.000/0000-00",
-        status: "liberado",
-        chargeType: "lives",
-        lives: 100,
-        valuePerLife: 33,
-        adjustmentType: "none"
-      },
-      {
-        id: "6",
-        name: "Nome da empresa fictícia",
-        document: "00.000.000/0000-00",
-        status: "liberado",
-        chargeType: "fixed",
-        fixedValue: 5300,
-        adjustmentType: "periodic",
-        adjustmentPercentage: 7,
-        adjustmentPeriod: 6
-      },
-      {
-        id: "7",
-        name: "Nome da empresa fictícia",
-        document: "00.000.000/0000-00",
-        status: "bloqueado",
-        chargeType: "fixed",
-        fixedValue: 920,
-        adjustmentType: "none"
-      }
-    ];
-    
+    const dummyData: Company[] = [{
+      id: "1",
+      name: "Nome da empresa fictícia",
+      document: "00.000.000/0000-00",
+      status: "liberado",
+      chargeType: "lives",
+      lives: 50,
+      valuePerLife: 66,
+      adjustmentType: "annual",
+      adjustmentPercentage: 10,
+      adjustmentMonth: 3
+    }, {
+      id: "2",
+      name: "Nome da empresa fictícia",
+      document: "00.000.000/0000-00",
+      status: "bloqueado",
+      chargeType: "fixed",
+      fixedValue: 840,
+      adjustmentType: "none"
+    }, {
+      id: "3",
+      name: "Nome da empresa fictícia",
+      document: "00.000.000/0000-00",
+      status: "liberado",
+      chargeType: "lives",
+      lives: 75,
+      valuePerLife: 44,
+      adjustmentType: "periodic",
+      adjustmentPercentage: 5,
+      adjustmentPeriod: 12
+    }, {
+      id: "4",
+      name: "Nome da empresa fictícia",
+      document: "00.000.000/0000-00",
+      status: "liberado",
+      chargeType: "fixed",
+      fixedValue: 3300,
+      adjustmentType: "annual",
+      adjustmentPercentage: 8,
+      adjustmentMonth: 7
+    }, {
+      id: "5",
+      name: "Nome da empresa fictícia",
+      document: "00.000.000/0000-00",
+      status: "liberado",
+      chargeType: "lives",
+      lives: 100,
+      valuePerLife: 33,
+      adjustmentType: "none"
+    }, {
+      id: "6",
+      name: "Nome da empresa fictícia",
+      document: "00.000.000/0000-00",
+      status: "liberado",
+      chargeType: "fixed",
+      fixedValue: 5300,
+      adjustmentType: "periodic",
+      adjustmentPercentage: 7,
+      adjustmentPeriod: 6
+    }, {
+      id: "7",
+      name: "Nome da empresa fictícia",
+      document: "00.000.000/0000-00",
+      status: "bloqueado",
+      chargeType: "fixed",
+      fixedValue: 920,
+      adjustmentType: "none"
+    }];
     setCompanies(dummyData);
     setFilteredCompanies(dummyData);
   }, []);
-
   const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat('pt-BR', { 
-      style: 'currency', 
-      currency: 'BRL' 
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
     }).format(value);
   };
-
   const getCurrentValue = (company: Company): number => {
     if (company.chargeType === "fixed") {
       return company.fixedValue || 0;
@@ -133,39 +117,29 @@ const Index = () => {
       return (company.lives || 0) * (company.valuePerLife || 0);
     }
   };
-
   const getAdjustmentDescription = (company: Company): string => {
     if (company.adjustmentType === "none") return "Sem reajuste";
     if (company.adjustmentType === "annual") {
-      const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
       return `${company.adjustmentPercentage}% anual em ${months[(company.adjustmentMonth || 1) - 1]}`;
     }
     return `${company.adjustmentPercentage}% a cada ${company.adjustmentPeriod} meses`;
   };
-
   const handleSearch = () => {
     if (!searchTerm.trim()) {
       setFilteredCompanies(companies);
       return;
     }
-    
     const filtered = companies.filter(company => {
       const searchLower = searchTerm.toLowerCase();
-      return (
-        company.name.toLowerCase().includes(searchLower) ||
-        company.document.toLowerCase().includes(searchLower)
-      );
+      return company.name.toLowerCase().includes(searchLower) || company.document.toLowerCase().includes(searchLower);
     });
-    
     setFilteredCompanies(filtered);
     setCurrentPage(1);
   };
-
   const handleSelectAll = () => {
     const newSelectAll = !selectAll;
     setSelectAll(newSelectAll);
-    
     if (newSelectAll) {
       const allIds = filteredCompanies.map(company => company.id);
       setSelectedCompanies(allIds);
@@ -173,43 +147,32 @@ const Index = () => {
       setSelectedCompanies([]);
     }
   };
-
   const handleSelectCompany = (id: string) => {
     if (selectedCompanies.includes(id)) {
       setSelectedCompanies(selectedCompanies.filter(companyId => companyId !== id));
       setSelectAll(false);
     } else {
       setSelectedCompanies([...selectedCompanies, id]);
-      
       if (selectedCompanies.length + 1 === filteredCompanies.length) {
         setSelectAll(true);
       }
     }
   };
-
   const openConfigModal = (company: Company) => {
-    setCurrentCompany({...company});
+    setCurrentCompany({
+      ...company
+    });
     setShowConfigModal(true);
   };
-
   const openMassAdjustmentModal = () => {
     setShowMassAdjustmentModal(true);
   };
-
   const saveCompanyConfig = () => {
     if (!currentCompany) return;
-    
-    setCompanies(companies.map(company => 
-      company.id === currentCompany.id ? currentCompany : company
-    ));
-    
-    setFilteredCompanies(filteredCompanies.map(company => 
-      company.id === currentCompany.id ? currentCompany : company
-    ));
-    
+    setCompanies(companies.map(company => company.id === currentCompany.id ? currentCompany : company));
+    setFilteredCompanies(filteredCompanies.map(company => company.id === currentCompany.id ? currentCompany : company));
     setShowConfigModal(false);
   };
-
   const applyMassAdjustment = () => {
     const updatedCompanies = companies.map(company => {
       if (selectedCompanies.includes(company.id)) {
@@ -223,40 +186,31 @@ const Index = () => {
       }
       return company;
     });
-    
     setCompanies(updatedCompanies);
-    setFilteredCompanies(updatedCompanies.filter(company => 
-      filteredCompanies.some(fc => fc.id === company.id)
-    ));
-    
+    setFilteredCompanies(updatedCompanies.filter(company => filteredCompanies.some(fc => fc.id === company.id)));
     setShowMassAdjustmentModal(false);
     setSelectedCompanies([]);
     setSelectAll(false);
   };
-
   const updateFixedValue = (companyId: string, value: string) => {
     const numericValue = parseFloat(value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-    
-    setCompanies(companies.map(company => 
-      company.id === companyId ? {...company, fixedValue: numericValue} : company
-    ));
-    
-    setFilteredCompanies(filteredCompanies.map(company => 
-      company.id === companyId ? {...company, fixedValue: numericValue} : company
-    ));
+    setCompanies(companies.map(company => company.id === companyId ? {
+      ...company,
+      fixedValue: numericValue
+    } : company));
+    setFilteredCompanies(filteredCompanies.map(company => company.id === companyId ? {
+      ...company,
+      fixedValue: numericValue
+    } : company));
   };
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredCompanies.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredCompanies.length / itemsPerPage);
-
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const nextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-
-  return (
-    <div className="mensalidades-container">
+  return <div className="mensalidades-container">
       <div className="nav-tabs-container">
         <ul className="nav nav-tabs">
           <li className="nav-item">
@@ -283,36 +237,20 @@ const Index = () => {
       <div className="content-container">
         <div className="search-container mb-4">
           <div className="input-group">
-            <input 
-              type="text" 
-              className="form-control" 
-              placeholder="Buscar por empresa, CNPJ, CPF..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-            />
+            <input type="text" className="form-control" placeholder="Buscar por empresa, CNPJ, CPF..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} onKeyPress={e => e.key === 'Enter' && handleSearch()} />
             <div className="input-group-append">
-              <button 
-                className="btn btn-primary" 
-                type="button"
-                onClick={handleSearch}
-              >
+              <button className="btn btn-primary" type="button" onClick={handleSearch}>
                 <Search size={16} />
               </button>
             </div>
           </div>
         </div>
         
-        {selectedCompanies.length > 0 && (
-          <div className="mb-3">
-            <button 
-              className="btn btn-primary"
-              onClick={openMassAdjustmentModal}
-            >
+        {selectedCompanies.length > 0 && <div className="mb-3">
+            <button className="btn btn-primary" onClick={openMassAdjustmentModal}>
               Aplicar Reajuste em Massa ({selectedCompanies.length})
             </button>
-          </div>
-        )}
+          </div>}
         
         <div className="table-responsive">
           <table className="table table-hover">
@@ -320,12 +258,7 @@ const Index = () => {
               <tr>
                 <th>
                   <div className="form-check">
-                    <input 
-                      className="form-check-input" 
-                      type="checkbox" 
-                      checked={selectAll}
-                      onChange={handleSelectAll}
-                    />
+                    <input className="form-check-input" type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                   </div>
                 </th>
                 <th>Empresa</th>
@@ -337,16 +270,10 @@ const Index = () => {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map(company => (
-                <tr key={company.id}>
+              {currentItems.map(company => <tr key={company.id}>
                   <td>
                     <div className="form-check">
-                      <input 
-                        className="form-check-input" 
-                        type="checkbox" 
-                        checked={selectedCompanies.includes(company.id)}
-                        onChange={() => handleSelectCompany(company.id)}
-                      />
+                      <input className="form-check-input" type="checkbox" checked={selectedCompanies.includes(company.id)} onChange={() => handleSelectCompany(company.id)} />
                     </div>
                   </td>
                   <td>
@@ -355,17 +282,13 @@ const Index = () => {
                   </td>
                   <td>
                     <div className="status-indicator">
-                      {company.status === "liberado" ? (
-                        <span className="status-liberado">
+                      {company.status === "liberado" ? <span className="status-liberado">
                           <Check size={16} className="status-icon" />
                           Liberado
-                        </span>
-                      ) : (
-                        <span className="status-bloqueado">
+                        </span> : <span className="status-bloqueado">
                           <X size={16} className="status-icon" />
                           Bloqueado
-                        </span>
-                      )}
+                        </span>}
                     </div>
                   </td>
                   <td>{company.chargeType === "lives" ? "Por vidas" : "Valor fixo"}</td>
@@ -374,21 +297,16 @@ const Index = () => {
                     <span>{formatCurrency(getCurrentValue(company))}</span>
                   </td>
                   <td>
-                    <button 
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => openConfigModal(company)}
-                    >
+                    <button className="btn btn-sm btn-outline-primary" onClick={() => openConfigModal(company)}>
                       <Edit size={16} />
                     </button>
                   </td>
-                </tr>
-              ))}
+                </tr>)}
             </tbody>
           </table>
         </div>
         
-        {totalPages > 1 && (
-          <nav aria-label="Paginação">
+        {totalPages > 1 && <nav aria-label="Paginação">
             <ul className="pagination justify-content-center">
               <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                 <button className="page-link" onClick={prevPage}>
@@ -396,19 +314,13 @@ const Index = () => {
                 </button>
               </li>
               
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
-                <li 
-                  key={number} 
-                  className={`page-item ${currentPage === number ? 'active' : ''}`}
-                >
-                  <button 
-                    className="page-link" 
-                    onClick={() => paginate(number)}
-                  >
+              {Array.from({
+            length: totalPages
+          }, (_, i) => i + 1).map(number => <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
+                  <button className="page-link" onClick={() => paginate(number)}>
                     {number}
                   </button>
-                </li>
-              ))}
+                </li>)}
               
               <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
                 <button className="page-link" onClick={nextPage}>
@@ -416,22 +328,16 @@ const Index = () => {
                 </button>
               </li>
             </ul>
-          </nav>
-        )}
+          </nav>}
       </div>
       
-      {showConfigModal && currentCompany && (
-        <div className="modal-backdrop show">
+      {showConfigModal && currentCompany && <div className="modal-backdrop show">
           <div className="modal show d-block" tabIndex={-1} role="dialog">
             <div className="modal-dialog modal-lg" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Configuração de Mensalidade</h5>
-                  <button 
-                    type="button" 
-                    className="close" 
-                    onClick={() => setShowConfigModal(false)}
-                  >
+                  <button type="button" className="close" onClick={() => setShowConfigModal(false)}>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -446,115 +352,77 @@ const Index = () => {
                   <div className="row mb-3">
                     <div className="col-md-6">
                       <label>Tipo de Cobrança</label>
-                      <select 
-                        className="form-control"
-                        value={currentCompany.chargeType}
-                        onChange={(e) => setCurrentCompany({
-                          ...currentCompany, 
-                          chargeType: e.target.value as "lives" | "fixed"
-                        })}
-                      >
+                      <select className="form-control" value={currentCompany.chargeType} onChange={e => setCurrentCompany({
+                    ...currentCompany,
+                    chargeType: e.target.value as "lives" | "fixed"
+                  })}>
                         <option value="lives">Por vidas</option>
                         <option value="fixed">Valor fixo</option>
                       </select>
                     </div>
                   </div>
                   
-                  {currentCompany.chargeType === "lives" ? (
-                    <div className="row mb-3">
+                  {currentCompany.chargeType === "lives" ? <div className="row mb-3">
                       <div className="col-md-6">
                         <label>Número de vidas</label>
-                        <span 
-                          className="form-control-plaintext"
-                        >
+                        <span className="form-control-plaintext">
                           {currentCompany.lives || 0}
                         </span>
                       </div>
                       <div className="col-md-6">
                         <label>Valor por vida (R$)</label>
-                        <input 
-                          type="text" 
-                          className="form-control currency-input"
-                          value={formatCurrency(currentCompany.valuePerLife || 0)}
-                          onChange={(e) => {
-                            const value = e.target.value.replace(/[^\d,]/g, '').replace(',', '.');
-                            setCurrentCompany({
-                              ...currentCompany, 
-                              valuePerLife: parseFloat(value) || 0
-                            });
-                          }}
-                        />
+                        <input type="text" className="form-control currency-input" value={formatCurrency(currentCompany.valuePerLife || 0)} onChange={e => {
+                    const value = e.target.value.replace(/[^\d,]/g, '').replace(',', '.');
+                    setCurrentCompany({
+                      ...currentCompany,
+                      valuePerLife: parseFloat(value) || 0
+                    });
+                  }} />
                       </div>
-                    </div>
-                  ) : (
-                    <div className="row mb-3">
+                    </div> : <div className="row mb-3">
                       <div className="col-md-6">
                         <label>Valor fixo (R$)</label>
-                        <input 
-                          type="text" 
-                          className="form-control currency-input"
-                          value={formatCurrency(currentCompany.fixedValue || 0)}
-                          onChange={(e) => {
-                            const value = e.target.value.replace(/[^\d,]/g, '').replace(',', '.');
-                            setCurrentCompany({
-                              ...currentCompany, 
-                              fixedValue: parseFloat(value) || 0
-                            });
-                          }}
-                        />
+                        <input type="text" className="form-control currency-input" value={formatCurrency(currentCompany.fixedValue || 0)} onChange={e => {
+                    const value = e.target.value.replace(/[^\d,]/g, '').replace(',', '.');
+                    setCurrentCompany({
+                      ...currentCompany,
+                      fixedValue: parseFloat(value) || 0
+                    });
+                  }} />
                       </div>
-                    </div>
-                  )}
+                    </div>}
                   
                   <hr />
                   
                   <div className="row mb-3">
                     <div className="col-md-6">
                       <label>Tipo de Reajuste</label>
-                      <select 
-                        className="form-control"
-                        value={currentCompany.adjustmentType}
-                        onChange={(e) => setCurrentCompany({
-                          ...currentCompany, 
-                          adjustmentType: e.target.value as "none" | "annual" | "periodic"
-                        })}
-                      >
+                      <select className="form-control" value={currentCompany.adjustmentType} onChange={e => setCurrentCompany({
+                    ...currentCompany,
+                    adjustmentType: e.target.value as "none" | "annual" | "periodic"
+                  })}>
                         <option value="none">Sem reajuste</option>
                         <option value="annual">Anual (mês específico)</option>
                         <option value="periodic">Periódico (a cada X meses)</option>
                       </select>
                     </div>
                     
-                    {currentCompany.adjustmentType !== "none" && (
-                      <div className="col-md-6">
+                    {currentCompany.adjustmentType !== "none" && <div className="col-md-6">
                         <label>Percentual de Reajuste (%)</label>
-                        <input 
-                          type="number" 
-                          className="form-control"
-                          min="0"
-                          step="0.1"
-                          value={currentCompany.adjustmentPercentage || 0}
-                          onChange={(e) => setCurrentCompany({
-                            ...currentCompany, 
-                            adjustmentPercentage: parseFloat(e.target.value) || 0
-                          })}
-                        />
-                      </div>
-                    )}
+                        <input type="number" className="form-control" min="0" step="0.1" value={currentCompany.adjustmentPercentage || 0} onChange={e => setCurrentCompany({
+                    ...currentCompany,
+                    adjustmentPercentage: parseFloat(e.target.value) || 0
+                  })} />
+                      </div>}
                   </div>
                   
-                  {currentCompany.adjustmentType === "annual" && (
-                    <div className="row mb-3">
+                  {currentCompany.adjustmentType === "annual" && <div className="row mb-3">
                       <div className="col-md-6">
                         <label>Mês do Reajuste</label>
-                        <select 
-                          className="form-control"
-                          value={currentCompany.adjustmentMonth || 1}
-                          onChange={(e) => setCurrentCompany({
-                            ...currentCompany, 
-                            adjustmentMonth: parseInt(e.target.value)
-                          })}
-                        >
+                        <select className="form-control" value={currentCompany.adjustmentMonth || 1} onChange={e => setCurrentCompany({
+                    ...currentCompany,
+                    adjustmentMonth: parseInt(e.target.value)
+                  })}>
                           <option value="1">Janeiro</option>
                           <option value="2">Fevereiro</option>
                           <option value="3">Março</option>
@@ -569,61 +437,38 @@ const Index = () => {
                           <option value="12">Dezembro</option>
                         </select>
                       </div>
-                    </div>
-                  )}
+                    </div>}
                   
-                  {currentCompany.adjustmentType === "periodic" && (
-                    <div className="row mb-3">
+                  {currentCompany.adjustmentType === "periodic" && <div className="row mb-3">
                       <div className="col-md-6">
                         <label>Período (em meses)</label>
-                        <input 
-                          type="number" 
-                          className="form-control"
-                          min="1"
-                          value={currentCompany.adjustmentPeriod || 12}
-                          onChange={(e) => setCurrentCompany({
-                            ...currentCompany, 
-                            adjustmentPeriod: parseInt(e.target.value) || 12
-                          })}
-                        />
+                        <input type="number" className="form-control" min="1" value={currentCompany.adjustmentPeriod || 12} onChange={e => setCurrentCompany({
+                    ...currentCompany,
+                    adjustmentPeriod: parseInt(e.target.value) || 12
+                  })} />
                       </div>
-                    </div>
-                  )}
+                    </div>}
                 </div>
                 <div className="modal-footer">
-                  <button 
-                    type="button" 
-                    className="btn btn-secondary" 
-                    onClick={() => setShowConfigModal(false)}
-                  >
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowConfigModal(false)}>
                     Cancelar
                   </button>
-                  <button 
-                    type="button" 
-                    className="btn btn-primary"
-                    onClick={saveCompanyConfig}
-                  >
+                  <button type="button" onClick={saveCompanyConfig} className="btn btn-primary ">
                     Salvar
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </div>}
       
-      {showMassAdjustmentModal && (
-        <div className="modal-backdrop show">
+      {showMassAdjustmentModal && <div className="modal-backdrop show">
           <div className="modal show d-block" tabIndex={-1} role="dialog">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Reajuste em Massa</h5>
-                  <button 
-                    type="button" 
-                    className="close" 
-                    onClick={() => setShowMassAdjustmentModal(false)}
-                  >
+                  <button type="button" className="close" onClick={() => setShowMassAdjustmentModal(false)}>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -632,48 +477,30 @@ const Index = () => {
                   
                   <div className="form-group">
                     <label>Tipo de Reajuste</label>
-                    <select 
-                      className="form-control"
-                      value={massAdjustment.adjustmentType}
-                      onChange={(e) => setMassAdjustment({
-                        ...massAdjustment, 
-                        adjustmentType: e.target.value as "none" | "annual" | "periodic"
-                      })}
-                    >
+                    <select className="form-control" value={massAdjustment.adjustmentType} onChange={e => setMassAdjustment({
+                  ...massAdjustment,
+                  adjustmentType: e.target.value as "none" | "annual" | "periodic"
+                })}>
                       <option value="none">Sem reajuste</option>
                       <option value="annual">Anual (mês específico)</option>
                       <option value="periodic">Periódico (a cada X meses)</option>
                     </select>
                   </div>
                   
-                  {massAdjustment.adjustmentType !== "none" && (
-                    <div className="form-group">
+                  {massAdjustment.adjustmentType !== "none" && <div className="form-group">
                       <label>Percentual de Reajuste (%)</label>
-                      <input 
-                        type="number" 
-                        className="form-control"
-                        min="0"
-                        step="0.1"
-                        value={massAdjustment.adjustmentPercentage}
-                        onChange={(e) => setMassAdjustment({
-                          ...massAdjustment, 
-                          adjustmentPercentage: parseFloat(e.target.value) || 0
-                        })}
-                      />
-                    </div>
-                  )}
+                      <input type="number" className="form-control" min="0" step="0.1" value={massAdjustment.adjustmentPercentage} onChange={e => setMassAdjustment({
+                  ...massAdjustment,
+                  adjustmentPercentage: parseFloat(e.target.value) || 0
+                })} />
+                    </div>}
                   
-                  {massAdjustment.adjustmentType === "annual" && (
-                    <div className="form-group">
+                  {massAdjustment.adjustmentType === "annual" && <div className="form-group">
                       <label>Mês do Reajuste</label>
-                      <select 
-                        className="form-control"
-                        value={massAdjustment.adjustmentMonth}
-                        onChange={(e) => setMassAdjustment({
-                          ...massAdjustment, 
-                          adjustmentMonth: parseInt(e.target.value)
-                        })}
-                      >
+                      <select className="form-control" value={massAdjustment.adjustmentMonth} onChange={e => setMassAdjustment({
+                  ...massAdjustment,
+                  adjustmentMonth: parseInt(e.target.value)
+                })}>
                         <option value="1">Janeiro</option>
                         <option value="2">Fevereiro</option>
                         <option value="3">Março</option>
@@ -687,48 +514,28 @@ const Index = () => {
                         <option value="11">Novembro</option>
                         <option value="12">Dezembro</option>
                       </select>
-                    </div>
-                  )}
+                    </div>}
                   
-                  {massAdjustment.adjustmentType === "periodic" && (
-                    <div className="form-group">
+                  {massAdjustment.adjustmentType === "periodic" && <div className="form-group">
                       <label>Período (em meses)</label>
-                      <input 
-                        type="number" 
-                        className="form-control"
-                        min="1"
-                        value={massAdjustment.adjustmentPeriod}
-                        onChange={(e) => setMassAdjustment({
-                          ...massAdjustment, 
-                          adjustmentPeriod: parseInt(e.target.value) || 12
-                        })}
-                      />
-                    </div>
-                  )}
+                      <input type="number" className="form-control" min="1" value={massAdjustment.adjustmentPeriod} onChange={e => setMassAdjustment({
+                  ...massAdjustment,
+                  adjustmentPeriod: parseInt(e.target.value) || 12
+                })} />
+                    </div>}
                 </div>
                 <div className="modal-footer">
-                  <button 
-                    type="button" 
-                    className="btn btn-secondary" 
-                    onClick={() => setShowMassAdjustmentModal(false)}
-                  >
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowMassAdjustmentModal(false)}>
                     Cancelar
                   </button>
-                  <button 
-                    type="button" 
-                    className="btn btn-primary"
-                    onClick={applyMassAdjustment}
-                  >
+                  <button type="button" className="btn btn-primary" onClick={applyMassAdjustment}>
                     Aplicar
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        </div>}
+    </div>;
 };
-
 export default Index;
