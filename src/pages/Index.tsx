@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Search, Check, X, Edit, ChevronLeft, ChevronRight } from "lucide-react";
 import "@/styles/mensalidades.css";
@@ -198,6 +199,11 @@ const Index = () => {
     }
   };
 
+  const selectAllCompanies = () => {
+    const allCompanyIds = companies.map(company => company.id);
+    setSelectedCompanies(allCompanyIds);
+  };
+
   const openConfigModal = (company: Company) => {
     setCurrentCompany({
       ...company
@@ -382,6 +388,7 @@ const Index = () => {
           </nav>}
       </div>
       
+      {/* Config Modal */}
       {showConfigModal && currentCompany && <div className="modal-backdrop show">
           <div className="modal show d-block" tabIndex={-1} role="dialog">
             <div className="modal-dialog modal-lg" role="document">
@@ -513,6 +520,7 @@ const Index = () => {
           </div>
         </div>}
       
+      {/* Mass Adjustment Modal - Updated with improved company selection */}
       {showMassAdjustmentModal && <div className="modal-backdrop show">
           <div className="modal show d-block" tabIndex={-1} role="dialog">
             <div className="modal-dialog" role="document">
@@ -526,6 +534,15 @@ const Index = () => {
                 <div className="modal-body">
                   <div className="form-group">
                     <label>Empresas Selecionadas ({selectedCompanies.length})</label>
+                    
+                    {/* Select All Companies button */}
+                    <button 
+                      className="btn btn-sm btn-outline-primary select-all-btn d-block"
+                      onClick={selectAllCompanies}
+                    >
+                      Selecionar Todas as Empresas
+                    </button>
+                    
                     <div className="company-selection-area">
                       <div className="selected-companies mb-3">
                         {selectedCompanies.length === 0 ? (

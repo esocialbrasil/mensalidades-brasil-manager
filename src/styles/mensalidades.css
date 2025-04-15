@@ -151,7 +151,7 @@
   max-width: 150px;
 }
 
-/* Modal Styles - Using standard bootstrap-like modal styles */
+/* Modal Styles - Updated for better visibility */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -198,12 +198,12 @@
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #ffffff;
+  background-color: #ffffff !important;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   outline: 0;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   opacity: 1 !important;
 }
 
@@ -638,4 +638,9 @@ label {
 
 .mt-2 {
   margin-top: 0.5rem !important;
+}
+
+/* Select All companies button */
+.select-all-btn {
+  margin-bottom: 0.75rem;
 }
