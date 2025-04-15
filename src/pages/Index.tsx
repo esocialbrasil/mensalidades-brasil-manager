@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Search, Check, X, Edit, ChevronLeft, ChevronRight } from "lucide-react";
 import "@/styles/mensalidades.css";
@@ -390,7 +389,7 @@ const Index = () => {
       
       {/* Config Modal */}
       {showConfigModal && currentCompany && <div className="modal-backdrop show">
-          <div className="modal show d-block" tabIndex={-1} role="dialog">
+          <div className="modal show d-block bg-white shadow rounded opacity-100" tabIndex={-1} role="dialog">
             <div className="modal-dialog modal-lg" role="document">
               <div className="modal-content">
                 <div className="modal-header">
@@ -508,10 +507,10 @@ const Index = () => {
                     </div>}
                 </div>
                 <div className="modal-footer">
-                  <button type="button" onClick={() => setShowConfigModal(false)} className="btn btn-secondary">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowConfigModal(false)}>
                     Cancelar
                   </button>
-                  <button type="button" onClick={saveCompanyConfig} className="btn btn-primary">
+                  <button type="button" className="btn btn-primary" onClick={saveCompanyConfig}>
                     Salvar
                   </button>
                 </div>
@@ -522,7 +521,7 @@ const Index = () => {
       
       {/* Mass Adjustment Modal - Updated with improved company selection */}
       {showMassAdjustmentModal && <div className="modal-backdrop show">
-          <div className="modal show d-block" tabIndex={-1} role="dialog">
+          <div className="modal show d-block bg-white shadow rounded opacity-100" tabIndex={-1} role="dialog">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
@@ -535,7 +534,6 @@ const Index = () => {
                   <div className="form-group">
                     <label>Empresas Selecionadas ({selectedCompanies.length})</label>
                     
-                    {/* Select All Companies button */}
                     <button 
                       className="btn btn-sm btn-outline-primary select-all-btn d-block"
                       onClick={selectAllCompanies}
