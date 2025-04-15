@@ -158,8 +158,8 @@
   z-index: 1040;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
-  opacity: 0.5;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
 }
 
 .modal {
@@ -185,6 +185,7 @@
   margin: 1.75rem auto;
   pointer-events: none;
   max-width: 500px;
+  z-index: 1060;
 }
 
 .modal-dialog.modal-lg {
@@ -197,12 +198,13 @@
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #fff;
+  background-color: #ffffff;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
   outline: 0;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+  opacity: 1 !important;
 }
 
 .modal-header {
@@ -211,9 +213,9 @@
   justify-content: space-between;
   padding: 1rem;
   border-bottom: 1px solid #dee2e6;
-  border-top-left-radius: calc(0.3rem - 1px);
-  border-top-right-radius: calc(0.3rem - 1px);
-  background-color: #fff;
+  border-top-left-radius: calc(0.5rem - 1px);
+  border-top-right-radius: calc(0.5rem - 1px);
+  background-color: #ffffff;
 }
 
 .modal-title {
@@ -226,7 +228,7 @@
   position: relative;
   flex: 1 1 auto;
   padding: 1rem;
-  background-color: #fff;
+  background-color: #ffffff;
 }
 
 .modal-footer {
@@ -235,9 +237,9 @@
   justify-content: flex-end;
   padding: 1rem;
   border-top: 1px solid #dee2e6;
-  border-bottom-right-radius: calc(0.3rem - 1px);
-  border-bottom-left-radius: calc(0.3rem - 1px);
-  background-color: #fff;
+  border-bottom-right-radius: calc(0.5rem - 1px);
+  border-bottom-left-radius: calc(0.5rem - 1px);
+  background-color: #ffffff;
 }
 
 .close {
@@ -490,29 +492,33 @@ label {
   }
 }
 
-/* Improve modal visibility - Updated for better contrast */
+/* Ensure modal content is fully opaque */
 .modal-backdrop.show {
-  opacity: 0.7; /* Semi-transparent backdrop for better visibility */
-  z-index: 1040;
+  opacity: 1;
 }
 
-.modal-dialog {
-  z-index: 1050; /* Ensure the dialog is above the backdrop */
-}
-
-/* Fix for the modal content to ensure it's fully opaque */
-.modal-content {
-  background-color: #fff;
-  opacity: 1 !important; /* Ensure full opacity with !important flag */
-}
-
-/* Add additional modal styling for better visibility */
-.modal-header, .modal-body, .modal-footer {
+.modal-content * {
+  background-color: #ffffff;
   opacity: 1 !important;
-  background-color: #fff !important;
 }
 
-/* Add border to the modal for better definition */
-.modal-content {
-  border: 2px solid rgba(0, 0, 0, 0.3);
+.modal-header, 
+.modal-body, 
+.modal-footer,
+.modal-content input,
+.modal-content select,
+.modal-content button {
+  opacity: 1 !important;
+  background-color: #ffffff !important;
+}
+
+.modal-content select,
+.modal-content input {
+  background-color: #ffffff !important;
+  border: 1px solid #ced4da !important;
+}
+
+/* Fix modal z-index to ensure it appears above everything else */
+.modal, .modal-dialog, .modal-content {
+  z-index: 9999;
 }

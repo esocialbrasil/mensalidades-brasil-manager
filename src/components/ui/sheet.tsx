@@ -61,6 +61,11 @@ const SheetContent = React.forwardRef<
     <SheetPrimitive.Content
       ref={ref}
       className={cn(sheetVariants({ side }), className)}
+      style={{
+        backgroundColor: "#ffffff",
+        boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.5)",
+        opacity: 1,
+      }}
       {...props}
     >
       {children}
