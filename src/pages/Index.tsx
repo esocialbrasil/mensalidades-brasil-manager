@@ -465,14 +465,10 @@ const Index = () => {
                       <div className="col-md-6">
                         <label>Número de vidas</label>
                         <input 
-                          type="number" 
-                          className="form-control"
-                          min="0"
+                          type="text" 
+                          className="form-control-plaintext"
+                          readOnly
                           value={currentCompany.lives || 0}
-                          onChange={(e) => setCurrentCompany({
-                            ...currentCompany, 
-                            lives: parseInt(e.target.value) || 0
-                          })}
                         />
                       </div>
                       <div className="col-md-6">
