@@ -1,4 +1,3 @@
-
 /* Mensalidades CSS */
 
 /* Bootstrap 4-like styles */
@@ -160,6 +159,7 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
 }
 
 .modal {
@@ -198,12 +198,13 @@
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: #ffffff !important;
+  background-color: #ffffff;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   outline: 0;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+  opacity: 1 !important;
 }
 
 .modal-header {
@@ -214,7 +215,7 @@
   border-bottom: 1px solid #dee2e6;
   border-top-left-radius: calc(0.5rem - 1px);
   border-top-right-radius: calc(0.5rem - 1px);
-  background-color: #ffffff !important;
+  background-color: #ffffff;
 }
 
 .modal-title {
@@ -227,7 +228,7 @@
   position: relative;
   flex: 1 1 auto;
   padding: 1rem;
-  background-color: #ffffff !important;
+  background-color: #ffffff;
 }
 
 .modal-footer {
@@ -238,8 +239,7 @@
   border-top: 1px solid #dee2e6;
   border-bottom-right-radius: calc(0.5rem - 1px);
   border-bottom-left-radius: calc(0.5rem - 1px);
-  background-color: #ffffff !important;
-  gap: 0.5rem;
+  background-color: #ffffff;
 }
 
 .close {
@@ -283,18 +283,6 @@ label {
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control-plaintext {
-  display: block;
-  width: 100%;
-  padding: 0.375rem 0;
-  margin-bottom: 0;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #212529;
-  background-color: transparent;
-  border: 0;
 }
 
 .form-control:focus {
@@ -505,44 +493,32 @@ label {
 }
 
 /* Ensure modal content is fully opaque */
-.modal-content *,
+.modal-backdrop.show {
+  opacity: 1;
+}
+
+.modal-content * {
+  background-color: #ffffff;
+  opacity: 1 !important;
+}
+
 .modal-header, 
 .modal-body, 
 .modal-footer,
 .modal-content input,
 .modal-content select,
 .modal-content button {
-  background-color: #ffffff !important;
   opacity: 1 !important;
+  background-color: #ffffff !important;
 }
 
-/* Explicitly ensure inputs and selects in modal are opaque */
 .modal-content select,
 .modal-content input {
   background-color: #ffffff !important;
   border: 1px solid #ced4da !important;
-  opacity: 1 !important;
 }
 
 /* Fix modal z-index to ensure it appears above everything else */
 .modal, .modal-dialog, .modal-content {
   z-index: 9999;
-}
-
-/* Additional padding for the modal footer */
-.modal-footer {
-  padding: 1rem;
-}
-
-/* Force modal to be opaque */
-.modal-dialog {
-  opacity: 1 !important;
-}
-
-/* Enforce solid white background for all modal elements */
-.modal-content,
-.modal-content > *,
-.modal-content > * > * {
-  background-color: #ffffff !important;
-  color: #000000;
 }
