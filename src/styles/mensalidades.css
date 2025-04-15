@@ -1,3 +1,4 @@
+
 /* Mensalidades CSS */
 
 /* Bootstrap 4-like styles */
@@ -79,7 +80,7 @@
 
 /* Search Container */
 .search-container {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 }
 
 .search-container .input-group {
@@ -159,7 +160,6 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
 }
 
 .modal {
@@ -203,7 +203,7 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   outline: 0;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
   opacity: 1 !important;
 }
 
@@ -260,6 +260,36 @@
 .close:hover {
   opacity: 0.75;
   text-decoration: none;
+}
+
+/* Company Selection Styles */
+.company-selection-area {
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+
+.selected-companies {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.selected-companies .list-group-item {
+  padding: 0.5rem 1rem;
+}
+
+.company-search .search-results {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.company-search .list-group-item-action {
+  cursor: pointer;
+}
+
+.company-search .list-group-item-action:hover {
+  background-color: #e9ecef;
 }
 
 /* Form Controls */
@@ -385,11 +415,95 @@ label {
   border-color: var(--blue);
 }
 
+.btn-outline-secondary {
+  color: var(--secondary);
+  border-color: var(--secondary);
+  background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.btn-outline-danger {
+  color: var(--red);
+  border-color: var(--red);
+  background-color: transparent;
+}
+
+.btn-outline-danger:hover {
+  color: #fff;
+  background-color: var(--red);
+  border-color: var(--red);
+}
+
+.btn-outline-success {
+  color: var(--green);
+  border-color: var(--green);
+  background-color: transparent;
+}
+
+.btn-outline-success:hover {
+  color: #fff;
+  background-color: var(--green);
+  border-color: var(--green);
+}
+
 .btn-sm {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
+}
+
+/* Alert styles */
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.alert-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+/* List group styles */
+.list-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-radius: 0.25rem;
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.list-group-item:last-child {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+
+.list-group-item-action {
+  width: 100%;
+  color: #495057;
+  text-align: inherit;
 }
 
 /* Pagination */
@@ -492,33 +606,36 @@ label {
   }
 }
 
-/* Ensure modal content is fully opaque */
-.modal-backdrop.show {
-  opacity: 1;
-}
-
-.modal-content * {
-  background-color: #ffffff;
-  opacity: 1 !important;
-}
-
-.modal-header, 
-.modal-body, 
-.modal-footer,
-.modal-content input,
-.modal-content select,
-.modal-content button {
-  opacity: 1 !important;
-  background-color: #ffffff !important;
-}
-
-.modal-content select,
-.modal-content input {
-  background-color: #ffffff !important;
-  border: 1px solid #ced4da !important;
-}
-
 /* Fix modal z-index to ensure it appears above everything else */
 .modal, .modal-dialog, .modal-content {
   z-index: 9999;
+}
+
+/* Helper classes */
+.d-flex {
+  display: flex !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.5rem !important;
 }

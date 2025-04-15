@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Search, Check, X, Edit, ChevronLeft, ChevronRight } from "lucide-react";
 import "@/styles/mensalidades.css";
+
 interface Company {
   id: string;
   name: string;
@@ -15,6 +16,7 @@ interface Company {
   adjustmentMonth?: number;
   adjustmentPeriod?: number;
 }
+
 const Index = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
@@ -31,7 +33,10 @@ const Index = () => {
     adjustmentMonth: 1,
     adjustmentPeriod: 12
   });
+  const [companySearchTerm, setCompanySearchTerm] = useState("");
+  const [companySearchResults, setCompanySearchResults] = useState<Company[]>([]);
   const itemsPerPage = 10;
+
   useEffect(() => {
     const dummyData: Company[] = [{
       id: "1",
@@ -104,12 +109,14 @@ const Index = () => {
     setCompanies(dummyData);
     setFilteredCompanies(dummyData);
   }, []);
+
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL'
     }).format(value);
   };
+
   const getCurrentValue = (company: Company): number => {
     if (company.chargeType === "fixed") {
       return company.fixedValue || 0;
@@ -117,6 +124,7 @@ const Index = () => {
       return (company.lives || 0) * (company.valuePerLife || 0);
     }
   };
+
   const getAdjustmentDescription = (company: Company): string => {
     if (company.adjustmentType === "none") return "Sem reajuste";
     if (company.adjustmentType === "annual") {
@@ -125,6 +133,7 @@ const Index = () => {
     }
     return `${company.adjustmentPercentage}% a cada ${company.adjustmentPeriod} meses`;
   };
+
   const handleSearch = () => {
     if (!searchTerm.trim()) {
       setFilteredCompanies(companies);
@@ -137,6 +146,35 @@ const Index = () => {
     setFilteredCompanies(filtered);
     setCurrentPage(1);
   };
+
+  const handleCompanySearch = () => {
+    if (!companySearchTerm.trim()) {
+      setCompanySearchResults([]);
+      return;
+    }
+    const searchResults = companies.filter(company => {
+      const searchLower = companySearchTerm.toLowerCase();
+      return (
+        (company.name.toLowerCase().includes(searchLower) || 
+         company.document.toLowerCase().includes(searchLower)) && 
+        !selectedCompanies.includes(company.id)
+      );
+    });
+    setCompanySearchResults(searchResults);
+  };
+
+  const addCompanyToSelection = (companyId: string) => {
+    if (!selectedCompanies.includes(companyId)) {
+      setSelectedCompanies([...selectedCompanies, companyId]);
+    }
+    setCompanySearchTerm("");
+    setCompanySearchResults([]);
+  };
+
+  const removeCompanyFromSelection = (companyId: string) => {
+    setSelectedCompanies(selectedCompanies.filter(id => id !== companyId));
+  };
+
   const handleSelectAll = () => {
     const newSelectAll = !selectAll;
     setSelectAll(newSelectAll);
@@ -147,6 +185,7 @@ const Index = () => {
       setSelectedCompanies([]);
     }
   };
+
   const handleSelectCompany = (id: string) => {
     if (selectedCompanies.includes(id)) {
       setSelectedCompanies(selectedCompanies.filter(companyId => companyId !== id));
@@ -158,21 +197,25 @@ const Index = () => {
       }
     }
   };
+
   const openConfigModal = (company: Company) => {
     setCurrentCompany({
       ...company
     });
     setShowConfigModal(true);
   };
+
   const openMassAdjustmentModal = () => {
     setShowMassAdjustmentModal(true);
   };
+
   const saveCompanyConfig = () => {
     if (!currentCompany) return;
     setCompanies(companies.map(company => company.id === currentCompany.id ? currentCompany : company));
     setFilteredCompanies(filteredCompanies.map(company => company.id === currentCompany.id ? currentCompany : company));
     setShowConfigModal(false);
   };
+
   const applyMassAdjustment = () => {
     const updatedCompanies = companies.map(company => {
       if (selectedCompanies.includes(company.id)) {
@@ -192,6 +235,7 @@ const Index = () => {
     setSelectedCompanies([]);
     setSelectAll(false);
   };
+
   const updateFixedValue = (companyId: string, value: string) => {
     const numericValue = parseFloat(value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
     setCompanies(companies.map(company => company.id === companyId ? {
@@ -203,6 +247,7 @@ const Index = () => {
       fixedValue: numericValue
     } : company));
   };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredCompanies.slice(indexOfFirstItem, indexOfLastItem);
@@ -210,6 +255,7 @@ const Index = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const nextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
+
   return <div className="mensalidades-container">
       <div className="nav-tabs-container">
         <ul className="nav nav-tabs">
@@ -235,21 +281,26 @@ const Index = () => {
       </div>
       
       <div className="content-container">
-        <div className="search-container mb-4">
-          <div className="input-group">
-            <input type="text" className="form-control" placeholder="Buscar por empresa, CNPJ, CPF..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} onKeyPress={e => e.key === 'Enter' && handleSearch()} />
-            <div className="input-group-append">
-              <button className="btn btn-primary" type="button" onClick={handleSearch}>
-                <Search size={16} />
-              </button>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="search-container">
+            <div className="input-group">
+              <input type="text" className="form-control" placeholder="Buscar por empresa, CNPJ, CPF..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} onKeyPress={e => e.key === 'Enter' && handleSearch()} />
+              <div className="input-group-append">
+                <button className="btn btn-primary" type="button" onClick={handleSearch}>
+                  <Search size={16} />
+                </button>
+              </div>
             </div>
           </div>
+          <button className="btn btn-primary" onClick={openMassAdjustmentModal}>
+            Aplicar Reajuste em Massa
+          </button>
         </div>
         
         {selectedCompanies.length > 0 && <div className="mb-3">
-            <button className="btn btn-primary" onClick={openMassAdjustmentModal}>
-              Aplicar Reajuste em Massa ({selectedCompanies.length})
-            </button>
+            <div className="alert alert-info">
+              {selectedCompanies.length} empresas selecionadas
+            </div>
           </div>}
         
         <div className="table-responsive">
@@ -450,10 +501,10 @@ const Index = () => {
                     </div>}
                 </div>
                 <div className="modal-footer">
-                  <button type="button" onClick={() => setShowConfigModal(false)} className="btn btn-secondary text-zinc-900">
+                  <button type="button" onClick={() => setShowConfigModal(false)} className="btn btn-secondary">
                     Cancelar
                   </button>
-                  <button type="button" onClick={saveCompanyConfig} className="btn btn-primary bg-blue-600 hover:bg-blue-500 text-blue-600">
+                  <button type="button" onClick={saveCompanyConfig} className="btn btn-primary">
                     Salvar
                   </button>
                 </div>
@@ -473,7 +524,78 @@ const Index = () => {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p>Aplicar reajuste para {selectedCompanies.length} empresas selecionadas:</p>
+                  <div className="form-group">
+                    <label>Empresas Selecionadas ({selectedCompanies.length})</label>
+                    <div className="company-selection-area">
+                      <div className="selected-companies mb-3">
+                        {selectedCompanies.length === 0 ? (
+                          <p className="text-muted">Nenhuma empresa selecionada</p>
+                        ) : (
+                          <ul className="list-group">
+                            {selectedCompanies.map(id => {
+                              const company = companies.find(c => c.id === id);
+                              return (
+                                <li key={id} className="list-group-item d-flex justify-content-between align-items-center">
+                                  <div>
+                                    <div>{company?.name}</div>
+                                    <small className="text-muted">{company?.document}</small>
+                                  </div>
+                                  <button 
+                                    className="btn btn-sm btn-outline-danger" 
+                                    onClick={() => removeCompanyFromSelection(id)}
+                                  >
+                                    <X size={16} />
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </div>
+                      
+                      <div className="company-search mb-3">
+                        <div className="input-group">
+                          <input 
+                            type="text" 
+                            className="form-control" 
+                            placeholder="Buscar empresa para adicionar..." 
+                            value={companySearchTerm} 
+                            onChange={e => setCompanySearchTerm(e.target.value)} 
+                            onKeyUp={e => e.key === 'Enter' && handleCompanySearch()}
+                          />
+                          <div className="input-group-append">
+                            <button className="btn btn-outline-secondary" type="button" onClick={handleCompanySearch}>
+                              <Search size={16} />
+                            </button>
+                          </div>
+                        </div>
+                        
+                        {companySearchResults.length > 0 && (
+                          <div className="search-results mt-2">
+                            <ul className="list-group">
+                              {companySearchResults.map(company => (
+                                <li 
+                                  key={company.id} 
+                                  className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                  onClick={() => addCompanyToSelection(company.id)}
+                                >
+                                  <div>
+                                    <div>{company.name}</div>
+                                    <small className="text-muted">{company.document}</small>
+                                  </div>
+                                  <button className="btn btn-sm btn-outline-success">
+                                    <Check size={16} />
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <hr />
                   
                   <div className="form-group">
                     <label>Tipo de Reajuste</label>
@@ -538,4 +660,5 @@ const Index = () => {
         </div>}
     </div>;
 };
+
 export default Index;
